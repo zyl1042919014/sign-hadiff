@@ -1,0 +1,80 @@
+name: "C_Base"
+data:
+    src: "text"    # Source - Either Gloss->Pose or Text->Pose (gloss,text)
+    trg: "skels"    # Target - 3D body co-ordinates (skels)
+    files: "files"    # Filenames for each sequence
+
+    train: "./data/asl/dev"
+    dev: "./data/asl/dev"
+    test: "./data/asl/dev"
+
+
+    level: "word"
+    lowercase: False
+
+    max_sent_length: 300 # Max Sentence Length
+    percent_tok: True
+    output_train: True
+    train_inf: True
+    scale_data: 1
+    output_videos: True
+    skip_frames: 1   # Skip frames in the data, to reduce the data input size
+    save_bt: True
+    # src_vocab: "./Configs/src_vocab.txt"
+
+training:
+    batch_size: 64    # Batch Size for training
+    batch_type: "sentence"
+    eval_metric: "dtw"  # Evaluation metric during training (dtw','bt')
+    model_dir: "./Models/asl" # Where the model shall be stored
+    use_cuda: True  # Flag to use GPU cuda capabilities
+    max_output_length: 300 # Max Output Length
+    loss: "MSE"
+
+model:
+    diffusion_path: "Models/als_pre_diff.bin"
+
+    mlp_hidden_dim: 64
+    num_steps: 500
+    initializer: "xavier" # Model initialisation (Xavier, ...)
+    init_gain: 1.0
+    bias_initializer: "zeros"  # Bias initialiser (Zeros, ...)
+    embed_initializer: "xavier" # Embedding initialiser (Xavier, ...)
+    embed_init_gain: 1.0
+    tied_embeddings: False
+    default: False
+    tied_softmax: False
+    trg_size: 64  # Size of target skeleton coordinates (150 for Inverse Kinematics body/hands)
+    count_in: True
+    EOS_input: True
+    zero_bos_frame: False
+    just_count_in: False # Flag for Just Counter Data Augmentation
+    gaussian_noise: False # Flag for Gaussian Noise Data Augmentation
+    noise_rate: 5 # Gaussian Noise rate
+    noise_from: "Within_Error"
+    sparse_noise: False
+    sparse_probability: 0.2
+    specific_noise: False
+    shift_frames: 0
+    future_prediction: 0 # Future Prediction Data Augmentation if > 0
+    future_prediction_from: 0
+    encoder:  # Model Encoder
+        type: "transformer"
+        num_layers: 2 # Number of layers
+        num_heads: 8  # Number of Heads
+        embeddings:
+            embedding_dim: 512  # Embedding Dimension
+            dropout: 0.0 # Embedding Dropout
+        hidden_size: 512 # Hidden Size Dimension
+        ff_size: 2048 # Feed-forward dimension (4 x hidden_size)
+        dropout: 0.0 # Encoder Dropout
+    decoder: # Model Decoder
+        type: "transformer"
+        num_layers: 2 # Number of layers
+        num_heads: 8 # Number of Heads
+        embeddings:
+            embedding_dim: 512 # Embedding Dimension
+            dropout: 0.0 # Embedding Dropout
+        hidden_size: 512 # Hidden Size Dimension
+        ff_size: 2048 # Feed-forward dimension (4 x hidden_size)
+        dropout: 0.0 # Decoder Dropout
