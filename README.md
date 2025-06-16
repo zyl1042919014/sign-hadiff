@@ -1,7 +1,7 @@
 # README for "Sign-HADiff: Hierarchical Attention Diffusion for Sign Language Generation" Code
 
 
-[**Projicet Link**](https://doi.org/XXX) 
+[**Projicet Link**](https://peterfanfan.github.io/Sign-HADiff/) 
 
 
 
@@ -38,7 +38,7 @@ python __main__.py CVT_test ./config/asl_config.yaml --ckpt ./Models/asl.ckpt
 
 ## 4. Contact 
 
-Email: yilin_zhang@stu.xidian.edu.cn
+Email: gwfeng_1@stu.xidian.edu.cn, yilin_zhang@stu.xidian.edu.cn
 
 Issue Tracker: Submit Issues
 
